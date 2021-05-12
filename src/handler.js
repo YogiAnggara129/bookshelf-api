@@ -1,4 +1,5 @@
 const { nanoid } = require('nanoid');
+const { filterByName, filterByReading, filterByFinished } = require('./helper');
 const books = require('./books');
 
 const saveBookHandler = (request, h) => {
@@ -74,8 +75,15 @@ const saveBookHandler = (request, h) => {
 };
 
 const showAllBooksHandler = (request, h) => {
-  const bookDataShowed = (book) => ({ id: book.id, name: book.name, publisher: book.publisher });
-  const booksShowed = books.map(bookDataShowed);
+  const { name, reading, finished } = request.query;
+
+  let booksTemp = filterByName(books, name);
+  booksTemp = filterByReading(booksTemp, reading);
+  booksTemp = filterByFinished(booksTemp, finished);
+
+  const booksShowed = booksTemp.map(
+    (book) => ({ id: book.id, name: book.name, publisher: book.publisher }),
+  );
 
   const response = h.response({
     status: 'success',
