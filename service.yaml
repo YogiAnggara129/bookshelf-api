@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookshelf-api-service
+spec:
+  type: ClusterIP
+  selector:
+    app: bookshelf-api
+  ports:
+    - protocol: TCP
+      port: 80          # Port dari luar (Service)
+      targetPort: 5000    # Port di dalam container

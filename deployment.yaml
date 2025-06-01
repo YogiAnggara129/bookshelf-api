@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookshelf-api
+  labels:
+    app: bookshelf-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookshelf-api
+  template:
+    metadata:
+      labels:
+        app: bookshelf-api
+    spec:
+      containers:
+        - name: bookshelf-api
+          image: yogianggara129/bookshelf-api:latest  # ganti dengan nama image kamu
+          ports:
+            - containerPort: 5000
+          env:
+            - name: NODE_ENV
+              value: "production"
